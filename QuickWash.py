@@ -1,4 +1,4 @@
-# Multi-utility file is perfect. Perform experiments here
+# This program will clean your dataset
 # IMPORTING MODULES
 import pandas as pd
 from sklearn.impute import SimpleImputer
