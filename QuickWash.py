@@ -362,8 +362,6 @@ def model_set(dataset):
 # Main Program
 print("\n*************************\nProgram Name:- Lazy Cleaner\n*************************\n")
 print("Welcome to QuickWash, the program to quickly clean your data.\n")
-
-# address = str(input("Enter the address of the CSV file:- "))
 address = str(input("Enter the address of the CSV file including the name of the CSV:-\n"))
 file = pd.read_csv(address)
 pd.set_option('display.max_columns', None)
