@@ -1,4 +1,4 @@
-# This program will clean your dataset
+# This program will clean your data set
 # IMPORTING MODULES
 import pandas as pd
 from sklearn.impute import SimpleImputer
@@ -360,8 +360,8 @@ def model_set(dataset):
 
 
 # Main Program
-print("\n*************************\nProgram Name:- Lazy Cleaner\n*************************\n")
-print("Welcome to QuickWash, the program to quickly clean your data.\n")
+print("\n*************************\nProgram Name:- QUICKWASH\n*************************\n")
+print("Welcome to QuickWash, the program to quickly clean your sheets (ﾟ▽^*).\n")
 address = str(input("Enter the address of the CSV file including the name of the CSV:-\n"))
 file = pd.read_csv(address)
 pd.set_option('display.max_columns', None)
@@ -375,6 +375,8 @@ print("Usually there may be a lot of unwanted columns in dataframe."
 raw_data = model_set(file)
 if raw_data.isnull().sum().sum() == 0:
     print("\nThe CSV file does not contain any missing values. Exiting program.")
+    print("New csv file has been created with name:- (QUICKWASH dataset.csv)")
+    raw_data.to_csv('QUICKWASH dataset.csv', index=False)
     exit()
 # Separating data as objects and numerical
 signal, choice = None, None
@@ -443,4 +445,3 @@ print("\nYour CSV file has been created.")
 name = csv_name + ".csv"
 final_data.to_csv(name, index=False)
 print("Thank you for using QUICKWASH.")
-
