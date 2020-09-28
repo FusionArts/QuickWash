@@ -1,7 +1,6 @@
 # This program will clean your data set
 # IMPORTING MODULES
 import pandas as pd
-from sklearn.impute import SimpleImputer
 
 
 # Defining function to check for correct input for choosing columns
@@ -265,6 +264,7 @@ def quick_num_autofill(dataframe, column_name):
 
 # Function to use Simple Impute
 def quick_num_impute(dataframe, column_name):
+    from sklearn.impute import SimpleImputer
     print("You choose to use Simple Impute.")
     print("Which of the following value you want to impute?")
     print("1. Mean\n2. Median\n3. Mode")
@@ -287,7 +287,7 @@ def quick_num_impute(dataframe, column_name):
 
 # Function to manually fill missing numerical values
 def quick_num_fill(dataframe, column_name):
-    print("You choose to enter manual data.")
+    print("\nYou choose to enter manual data.")
     print("There are 3 ways you can give manual entry.")
     print("Which of the following procedure you want to follow?")
     print("1. Give only one value to fill all missing values.")
@@ -297,22 +297,22 @@ def quick_num_fill(dataframe, column_name):
     minor_option = ['1', '2', '3']
     menu_option = check_input(minor_option, process_2)
     if menu_option == '1':
-        print("Enter the data you want for all the missing values: ")
+        print("\nEnter the data you want for all the missing values: ")
         missing_entry = filler()
         for column in column_name:
             dataframe[column] = dataframe[column].fillna(missing_entry)
     elif menu_option == '2':
         for column in column_name:
-            print("Enter your data for column name:-", column)
+            print("\nEnter your data for column name:-", column)
             missing_entry = filler()
             dataframe[column] = dataframe[column].fillna(missing_entry)
     else:
         for column in column_name:
             for row_index in range(len(dataframe[column])):
                 if dataframe[column].isnull()[row_index]:
-                    print("This row has missing values:- ")
+                    print("\nThis row has missing values:- ")
                     print(dataframe.loc[row_index])
-                    print("Fill the missing value for:-")
+                    print("\nFill the missing value for:-")
                     print("Column:", column.upper(), "based on the data in columns stated above.")
                     print("Your input: ")
                     missing_entry = filler()
@@ -345,7 +345,7 @@ def switch(dataset, data_column, operation_choice, operation_type):
 
 def model_set(dataset):
     main_columns = list(tuple(dataset.columns))
-    print("The columns in this dataset are:-\n:::::::::::::::::::::::::::::::\n", main_columns, "\n")
+    print("\nThe columns in this dataset are:-\n:::::::::::::::::::::::::::::::\n", main_columns, "\n")
     print("Type the name of columns you want to drop(separated by commas','and a space)"
           "\nPress enter to skip this operation or type 'exit' to terminate the program:-\n")
     user_entry = None
@@ -361,7 +361,7 @@ def model_set(dataset):
 
 # Main Program
 print("\n*************************\nProgram Name:- QUICKWASH\n*************************\n")
-print("Welcome to QuickWash, the program to quickly clean your sheets (ﾟ▽^*).\n")
+print("Welcome to QuickWash, the program to quickly clean your sheet (ﾟ▽^*).\n")
 address = str(input("Enter the address of the CSV file including the name of the CSV:-\n"))
 file = pd.read_csv(address)
 pd.set_option('display.max_columns', None)
@@ -445,3 +445,4 @@ print("\nYour CSV file has been created.")
 name = csv_name + ".csv"
 final_data.to_csv(name, index=False)
 print("Thank you for using QUICKWASH.")
+input("\nPress any key to exit.")
