@@ -359,11 +359,32 @@ def model_set(dataset):
     return compact_data
 
 
+# Checking the address of the CSV file entered by the user
+def address_check(address):
+    try:
+        pd.read_csv(address)
+        return 1
+    except FileNotFoundError:
+        print("\nYou entered a wrong address. Please, type the address again.")
+        print("Type below:- ")
+        return 0
+
+
+# Creating a infinite loop until the user enters a valid output
+def location_input():
+    print("Enter the address of the CSV file including the name of the CSV:-\n")
+    while 1:
+        address = str(input())
+        if address_check(address):
+            break
+    return address
+
+
 # Main Program
 print("\n*************************\nProgram Name:- QUICKWASH\n*************************\n")
 print("Welcome to QuickWash, the program to quickly clean your sheet (ﾟ▽^*).\n")
-address = str(input("Enter the address of the CSV file including the name of the CSV:-\n"))
-file = pd.read_csv(address)
+location = location_input()
+file = pd.read_csv(location)
 pd.set_option('display.max_columns', None)
 print("\n:::::::::::::::::::::::::::::::::")
 print("The first 5 rows of the dataframe:\n:::::::::::::::::::::::::::::::::\n", file.head(5))
