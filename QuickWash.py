@@ -394,10 +394,14 @@ print("\n:::::::::::::::::::::::::::::::")
 print("Usually there may be a lot of unwanted columns in dataframe."
       " You can remove such unwanted columns.")
 raw_data = model_set(file)
+print("\n===========================")
+print("Checking for missing values:")
+print("===========================")
 if raw_data.isnull().sum().sum() == 0:
     print("\nThe CSV file does not contain any missing values. Exiting program.")
     print("New csv file has been created with name:- (QUICKWASH dataset.csv)")
     raw_data.to_csv('QUICKWASH dataset.csv', index=False)
+    input("\nPress any key to exit.")
     exit()
 # Separating data as objects and numerical
 signal, choice = None, None
@@ -466,4 +470,4 @@ print("\nYour CSV file has been created.")
 name = csv_name + ".csv"
 final_data.to_csv(name, index=False)
 print("Thank you for using QUICKWASH.")
-input("\nPress any key to exit.")
+input("Press any key to exit.")
