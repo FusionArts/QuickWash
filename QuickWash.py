@@ -470,4 +470,4 @@ print("\nYour CSV file has been created.")
 name = csv_name + ".csv"
 final_data.to_csv(name, index=False)
 print("Thank you for using QUICKWASH.")
-input("Press any key to exit.")
+input("\nPress any key to exit.")
