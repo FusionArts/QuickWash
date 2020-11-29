@@ -6,7 +6,9 @@ import pandas as pd
 # Defining function to check for correct input for choosing columns
 def user_drop_entry(data_cols, user_input_values):
     user_input_lower = [value.lower() for value in user_input_values]
+    # This statement will trigger only if the user types 'exit' in any case (UPPER/LOWER)
     if 'exit' in user_input_lower:
+        # checking if 'exit' is a column name
         if set(user_input_values).issubset(data_cols):
             long_str = ', '.join(user_input_values)
             if len(user_input_values) == 1:
@@ -16,10 +18,12 @@ def user_drop_entry(data_cols, user_input_values):
                 print("This program will proceed further without these following columns:-\n",
                       long_str)
             return 1
-        else:
+        else:  # if not then QuickWash will exit()
             print("\nProgram terminated\nYou chose to exit")
             print("Bye ＼(*^▽^*)/ Bye\nCome back soon")
+            input("Press any key to exit: ")
             exit()
+    # The statement below will match the input column names to the column names in the dataset
     elif set(user_input_values).issubset(data_cols):
         long_str = ', '.join(user_input_values)
         if len(user_input_values) == 1:
@@ -28,6 +32,7 @@ def user_drop_entry(data_cols, user_input_values):
             print("This program will proceed further without these following columns:-\n",
                   long_str)
         return 1
+    # This statement will execute only if the user does not wish to drop any column
     elif user_input_lower == ['']:
         print("\nSince you pressed enter without entering any column name\n"
               "This program will proceed with the complete data-set")
@@ -53,6 +58,7 @@ def user_entry_check_major(expected, entered):
     if temp_string == 'exit' or entered == expected[-1]:
         print("\nProgram terminated\nYou chose to exit")
         print("Bye ＼(*^▽^*)/ Bye\nCome back soon")
+        input("Press any key to exit: ")
         exit()
     elif entered in expected[:-1]:
         return 1
@@ -67,6 +73,7 @@ def user_entry_check_minor(expected, entered):
     elif entered.lower() == "exit":
         print("\nProgram terminated\nYou chose to exit")
         print("Bye ＼(*^▽^*)/ Bye\nCome back soon")
+        input("Press any key to exit: ")
         exit()
     else:
         print("Please enter a valid input:-")
@@ -120,13 +127,13 @@ def quick_cat_autofill(dataframe, column_name):
     print("1. Complete database at once\n2. Fill each column individually")
     print("Give your input:- ")
     minor_option = ['1', '2']
-    menu_option_1 = check_input(minor_option, process_2)
+    menu_option_1 = check_input(minor_option, PROCESS[1])
     if menu_option_1 == '1':
         print("\nYou choose to Auto-fill the missing values of the complete database at once.")
         print("Which of the following Data do you want?")
         print("1. Most common\n2. Least common")
         print("Give your input:- ")
-        menu_option_2 = check_input(minor_option, process_2)
+        menu_option_2 = check_input(minor_option, PROCESS[1])
         if menu_option_2 == '1':
             for column in column_name:
                 temp_value = tuple(dataframe[column].mode())[0]
@@ -146,7 +153,7 @@ def quick_cat_autofill(dataframe, column_name):
             print("Which of the following Data do you want?")
             print("1. Most common\n2. Least common")
             print("Give your input:- ")
-            menu_option_2 = check_input(minor_option, process_2)
+            menu_option_2 = check_input(minor_option, PROCESS[1])
             if menu_option_2 == '1':
                 dataframe[column] = dataframe[column].fillna(temp_value_1)
             if menu_option_2 == '2':
@@ -157,7 +164,7 @@ def quick_cat_autofill(dataframe, column_name):
 
 # Function to manually fill categorical missing values
 def quick_cat_fill(dataframe, column_name):
-    print("You choose to enter manual data.")
+    print("\nYou choose to enter manual data.")
     print("There are 3 ways you can give manual entry.")
     print("Which of the following procedure you want to follow?")
     print("1. Give only one value to fill all missing values.")
@@ -165,7 +172,7 @@ def quick_cat_fill(dataframe, column_name):
     print("3. Enter value for every cell with missing values. (CAUTION: This will take some time.)")
     print("\nEnter your choice:- ")
     minor_option = ['1', '2', '3']
-    menu_option = check_input(minor_option, process_2)
+    menu_option = check_input(minor_option, PROCESS[1])
     if menu_option == '1':
         print("Enter the data you want for all the missing values: ")
         missing_entry = filler()
@@ -206,12 +213,12 @@ def quick_num_drop(dataframe, column_name):
 
 # Function to autofill missing numerical values
 def quick_num_autofill(dataframe, column_name):
-    print("\nYou chose to fill missing values with mean/median/mode or least common value.")
+    print("\nYou choose to fill missing values with mean/median/mode or least common value.")
     print("How do you want to fill the missing data?")
     print("1. Complete database at once\n2. Fill each column individually")
     print("Give your input:- ")
     minor_option = ['1', '2']
-    menu_option_1 = check_input(minor_option, process_2)
+    menu_option_1 = check_input(minor_option, PROCESS[1])
     minor_option_2 = ['1', '2', '3', '4', 'mean', 'median', 'mode',
                       'least common', 'least', 'leastcommon']
     if menu_option_1 == '1':
@@ -219,7 +226,7 @@ def quick_num_autofill(dataframe, column_name):
         print("Which of the following Data do you want?")
         print("1. Mean\n2. Median\n3. Mode\n4. Least Common")
         print("Give your input:- ")
-        menu_option_2 = check_input(minor_option_2, process_2)
+        menu_option_2 = check_input(minor_option_2, PROCESS[1])
         if menu_option_2 in ['1', 'mean']:
             for column in column_name:
                 temp_value = dataframe[column].mean()
@@ -249,7 +256,7 @@ def quick_num_autofill(dataframe, column_name):
             print("Which of the following Data do you want?")
             print("1. Mean\n2. Median\n3. Mode\n4. Least Common")
             print("Give your input:- ")
-            menu_option_2 = (check_input(minor_option_2, process_2)).lower()
+            menu_option_2 = (check_input(minor_option_2, PROCESS[1])).lower()
             if menu_option_2 in ['1', 'mean']:
                 dataframe[column] = dataframe[column].fillna(mean_value)
             if menu_option_2 in ['2', 'median']:
@@ -264,13 +271,14 @@ def quick_num_autofill(dataframe, column_name):
 
 # Function to use Simple Impute
 def quick_num_impute(dataframe, column_name):
+    print("\nImporting Simple Impute, please wait: ")
     from sklearn.impute import SimpleImputer
     print("You choose to use Simple Impute.")
-    print("Which of the following value you want to impute?")
+    print("\nWhich of the following value you want to impute?")
     print("1. Mean\n2. Median\n3. Mode")
     print("Enter your choice:- ")
     minor_option = ['1', '2', '3']
-    menu_option = check_input(minor_option, process_2)
+    menu_option = check_input(minor_option, PROCESS[1])
     if menu_option.lower == ['1']:
         option = 'mean'
     elif menu_option.lower == ['2']:
@@ -295,7 +303,7 @@ def quick_num_fill(dataframe, column_name):
     print("3. Enter value for every cell with missing values. (CAUTION: This will take some time.)")
     print("\nEnter your choice:- ")
     minor_option = ['1', '2', '3']
-    menu_option = check_input(minor_option, process_2)
+    menu_option = check_input(minor_option, PROCESS[1])
     if menu_option == '1':
         print("\nEnter the data you want for all the missing values: ")
         missing_entry = filler()
@@ -328,13 +336,13 @@ def quick_num_ignore(dataframe):
 
 # Function to define the switch functions
 def switch(dataset, data_column, operation_choice, operation_type):
-    if operation_type == 1:
+    if operation_type == 0:
         operation_list = ['quick_cat_drop(dataset, data_column)', 'quick_cat_autofill(dataset, data_column)',
                           'quick_cat_fill(dataset, data_column)', 'quick_cat_ignore(dataset)']
         index = int(operation_choice) - 1
         filtered_data = eval(operation_list[index])
         return filtered_data
-    if operation_type == 2:
+    if operation_type == 1:
         operation_list = ['quick_num_drop(dataset, data_column)', 'quick_num_autofill(dataset, data_column)',
                           'quick_num_impute(dataset, data_column)', 'quick_num_fill(dataset, data_column)',
                           'quick_num_ignore(dataset)']
@@ -372,7 +380,7 @@ def address_check(address):
 
 # Creating a infinite loop until the user enters a valid output
 def location_input():
-    print("Enter the address of the CSV file including the name of the CSV:-\n")
+    print("Enter the address of the CSV file including the name of the file and extension (*.csv):-\n")
     while 1:
         address = str(input())
         if address_check(address):
@@ -380,94 +388,139 @@ def location_input():
     return address
 
 
-# Main Program
-print("\n*************************\nProgram Name:- QUICKWASH\n*************************\n")
+# Main Program [Here, we will call the required functions sequentially.]
+print("\n*************************\nProgram Name:- QuickWash\n*************************\n")
 print("Welcome to QuickWash, the program to quickly clean your sheet (ﾟ▽^*).\n")
-location = location_input()
-file = pd.read_csv(location)
-pd.set_option('display.max_columns', None)
-print("\n:::::::::::::::::::::::::::::::::")
-print("The first 5 rows of the dataframe:\n:::::::::::::::::::::::::::::::::\n", file.head(5))
-print("\n\n::::::::::::::::::::::::::::::::")
-print("The last 5 rows of the dataframe:\n::::::::::::::::::::::::::::::::\n", file.tail(5))
-print("\n:::::::::::::::::::::::::::::::")
-print("Usually there may be a lot of unwanted columns in dataframe."
-      " You can remove such unwanted columns.")
-raw_data = model_set(file)
-print("\n===========================")
-print("Checking for missing values:")
-print("===========================")
-if raw_data.isnull().sum().sum() == 0:
-    print("\nThe CSV file does not contain any missing values. Exiting program.")
-    print("New csv file has been created with name:- (QUICKWASH dataset.csv)")
-    raw_data.to_csv('QUICKWASH dataset.csv', index=False)
-    input("\nPress any key to exit.")
-    exit()
-# Separating data as objects and numerical
-signal, choice = None, None
-process_1, process_2 = 0, 1
-operate_1, operate_2 = 1, 2
-objects = raw_data.select_dtypes(include=object)
-object_column = objects.columns.tolist()
-continuous = raw_data.select_dtypes(exclude=object)
-continuous_column = continuous.columns.tolist()
-# Checking missing categorical values
-print("\nChecking for categorical missing values:- ◕ ◡ ◕")
-if objects.isnull().values.any():
-    print("=======================================")
-    print("\nDataframe contains missing categorical values.")
-    obj_missing = objects.columns[objects.isna().any()].tolist()
-    print("These columns have null values:-\n", obj_missing)
-    # Performing Operations on missing Categorical values
-    print("\n..................................................................")
-    print("What operation would you like to perform for missing categorical values?")
-    print("\t1. Remove the rows with missing categorical values.\n"
-          "\t2. Fill missing values with most common or least common values\n"
-          "\t3. Fill missing value with your own data.\n"
-          "\t4. Ignore the operation and continue. (caution- Results may be unpredictable)\n"
-          "\t5. Exit the program\n")
-    print("Type the number representing the commands or type 'exit' to terminate the program:- ")
-    expected_input = ['1', '2', '3', '4', '5']
-    if __name__ == '__main__':
-        return_signal = check_input(expected_input, process_1)
-        signal = return_signal
-    choice = signal
-    object_data = switch(raw_data, object_column, choice, operate_1)
-else:
-    print("(No missing values)")
-    object_data = raw_data
-# Checking missing numerical values
-print("\nChecking for numerical missing values:- ◕ ◡ ◕")
-if continuous.isnull().values.any():
-    print("=====================================")
-    print("\nDataframe contains missing numerical values.")
-    num_missing = continuous.columns[continuous.isna().any()].tolist()
-    print("These columns have null values:-\n", num_missing)
-    # Performing Operations on missing Numerical values
-    print("\n......................................................................")
-    print("What operation would you like to perform for missing numerical values?")
-    print("\t1. Remove the rows with missing values.\n"
-          "\t2. Fill missing values with mean/median or common values.\n"
-          "\t3. Use Simple Impute\n"
-          "\t4. Fill missing value with your own data.\n"
-          "\t5. Ignore filling missing values and continue. (caution- Results may be unpredictable)\n"
-          "\t6. Exit the program\n")
-    print("Type the number representing the commands or type 'exit' to terminate the program:- ")
-    expected_input = ['1', '2', '3', '4', '5', '6']
-    if __name__ == '__main__':
-        return_signal = check_input(expected_input, process_1)
-        signal = return_signal
-    choice = signal
-    numerical_data = switch(object_data, continuous_column, choice, operate_2)
-else:
-    numerical_data = object_data
-    print("(No missing values)")
-    print("Clear to proceed\n\n")
-final_data = numerical_data
-print("\nYour data analysis is complete.")
-csv_name = str(input("Give a name to the new csv file:- "))
-print("\nYour CSV file has been created.")
-name = csv_name + ".csv"
-final_data.to_csv(name, index=False)
-print("Thank you for using QUICKWASH.")
-input("\nPress any key to exit.")
+# Assigning important constants to work as signals.
+PROCESS = (0, 1)  # Global Constant
+
+
+def main():
+    major_option = ['1', '2']
+    location = location_input()  # Local variable of file location
+    file = pd.read_csv(location)
+    pd.set_option('display.max_columns', None)
+    print("\n:::::::::::::::::::::::::::::::::")
+    print("The first 5 rows of the dataframe:\n:::::::::::::::::::::::::::::::::\n", file.head(5))
+    print("\n\n::::::::::::::::::::::::::::::::")
+    print("The last 5 rows of the dataframe:\n::::::::::::::::::::::::::::::::\n", file.tail(5))
+    print("\n:::::::::::::::::::::::::::::::")
+    print("Usually there may be a lot of unwanted columns in dataframe."
+          " You can remove such unwanted columns.")
+    raw_data = model_set(file)
+    row_miss = len(raw_data) - len(raw_data.dropna())
+    # Points to be noted:
+    # 1. raw_data: the data that will be used to separate
+    #   categorical data types and numerical data types only.
+    # 2. row_miss: only show the total number of rows to be changed or cleaned.
+    print("\n===========================")
+    print("Checking for missing values:")
+    print("===========================")
+    if row_miss == 0:
+        print("\nThe CSV file does not contain any missing values.")
+        print("A new csv file has been created with name:- (QuickWash dataset.csv)")
+        raw_data.to_csv('QuickWash dataset.csv', index=False)
+        print("\nDo you to enter a new dataset to clean?\n"
+              "\nType:\n----\n"
+              "1. To enter a new dataset.\n"
+              "2. To exit the program.")
+        print("\nEnter your choice: ")
+        choice = check_input(major_option, PROCESS[1])
+        if choice == '1':
+            print("\n======================================\n"
+                  "Restarting QuickWash for a new dataset:\n"
+                  "======================================\n")
+            main()
+        else:
+            print("\nThank you for using QuickWash.")
+            input("\nPress any key exit: ")
+            exit()
+    signal = None  # A local variable for the function main to be called where needed.
+    # Separating data based on Data types.
+    objects = raw_data.select_dtypes(include=object)
+    object_column = objects.columns.tolist()
+    continuous = raw_data.select_dtypes(exclude=object)
+    continuous_column = continuous.columns.tolist()
+    # Checking missing categorical values.
+    print("\nChecking for categorical missing values:- ◕ ◡ ◕")
+    if objects.isnull().values.any():
+        print("=======================================")
+        print("\nDataframe contains missing categorical values.")
+        # Make a list of categorical columns with missing values.
+        obj_missing = objects.columns[objects.isna().any()].tolist()
+        print("These columns have null values:-\n", obj_missing)  # Printing the columns with missing values.
+        # Performing Operations on missing Categorical values.
+        print("\n..................................................................")
+        print("What operation would you like to perform for missing categorical values?")
+        print("\t1. Remove the rows with missing categorical values.\n"
+              "\t2. Fill missing values with most common or least common values\n"
+              "\t3. Fill missing value with your own data.\n"
+              "\t4. Ignore the operation and continue. (caution- Results may be unpredictable)\n"
+              "\t5. Exit the program\n")
+        print("Type the number representing the commands or type 'exit' to terminate the program:- ")
+        major_option1 = ['1', '2', '3', '4', '5']
+        if __name__ == '__main__':
+            return_signal = check_input(major_option1, PROCESS[0])
+            signal = return_signal
+        choice1 = signal
+        # Cleaning operation trigger [CATEGORICAL DATA / STRINGS]
+        object_data = switch(raw_data, object_column, choice1, PROCESS[0])
+    else:
+        print("(No missing values)")
+        object_data = raw_data
+    # Checking missing numerical values
+    print("\nChecking for numerical missing values:- ◕ ◡ ◕")
+    if continuous.isnull().values.any():
+        print("=====================================")
+        print("\nDataframe contains missing numerical values.")
+        num_missing = continuous.columns[continuous.isna().any()].tolist()
+        print("These columns have null values:-\n", num_missing)
+        # Performing Operations on missing Numerical values
+        print("\n......................................................................")
+        print("What operation would you like to perform for missing numerical values?")
+        print("\t1. Remove the rows with missing values.\n"
+              "\t2. Fill missing values with mean/median or common values.\n"
+              "\t3. Use Simple Impute\n"
+              "\t4. Fill missing value with your own data.\n"
+              "\t5. Ignore filling missing values and continue. (caution- Results may be unpredictable)\n"
+              "\t6. Exit the program\n")
+        print("Type the number representing the commands or type 'exit' to terminate the program:- ")
+        major_option2 = ['1', '2', '3', '4', '5', '6']
+        if __name__ == '__main__':
+            return_signal = check_input(major_option2, PROCESS[0])
+            signal = return_signal
+        choice2 = signal
+        # Cleaning operation trigger [NUMERICAL DATA]
+        numerical_data = switch(object_data, continuous_column, choice2, PROCESS[1])
+    else:
+        numerical_data = object_data
+        print("(No missing values)")
+        print("Clear to proceed\n\n")
+
+    # This is final data after cleaning.
+    final_data = numerical_data
+    print("\nYour data cleaning operation is complete.")
+    print("Changes were made in", row_miss, "rows.")
+    print("\nDo you want to rerun the cleaning operation or continue to save the file?\n"
+          "Type:\n"
+          "1: Save file and start cleaning a new file.\n"
+          "2: Save the file and exit.\n"
+          "\nEnter your choice: ")
+    choice = check_input(major_option, PROCESS[0])
+    # Entering a name for the new CSV / Dataset
+    csv_name = str(input("\nGive a new name to the csv file to be cleaned:- "))
+    print("\nYour CSV file has been created.")
+    name = csv_name + ".csv"
+    final_data.to_csv(name, index=False)
+    if choice == '1':
+        print("\n======================================\n"
+              "Restarting QuickWash for a new dataset:\n"
+              "======================================\n")
+        main()
+    else:
+        print("Thank you for using QuickWash.")
+        input("Press any key to exit.")
+    # End of program
+
+
+main()
