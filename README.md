@@ -11,13 +11,20 @@ The key points to know about this program are as follows:-
   
 ## Features supported:-
   1: Checking if any dataset conatin missing values.
+  
   2: Separating cleaning operations between categorical and numerical data in dataset.
+  
   3: Remove unwanted columns.
+  
   4: Remoove rows with missing values.
+  
   5: Choosing mean, median, mode any other types of ways to fill missing values.
+  
   6: Can perform cleaning operation on the whole dataset at once or column by column.
+  
   7: Fill missing values with your own data.
-  8: Fill each cell with missing value.
+  
+  8: Fill each cell with missing value.\n
   9: Verifier to check if the data entered by user is null or valid.
   10: Simple Imputer module from sklearn for quick imputing.
   11: Smart sensing mechanism to make sure the user enters only valid data.
