@@ -16,7 +16,7 @@ The key points to know about this program are as follows:-
   
   3: Remove unwanted columns.
   
-  4: Remoove rows with missing values.
+  4: Remove rows with missing values.
   
   5: Choosing mean, median, mode any other types of ways to fill missing values.
   
